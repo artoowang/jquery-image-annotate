@@ -30,6 +30,7 @@
         this.canvas.height(this.height());
         this.canvas.width(this.width());
         this.canvas.css('background-image', 'url("' + this.attr('src') + '")');
+        this.canvas.css('background-size', this.width() + 'px ' + this.height() + 'px');
         this.canvas.children('.image-annotate-view, .image-annotate-edit').height(this.height());
         this.canvas.children('.image-annotate-view, .image-annotate-edit').width(this.width());
 
@@ -289,6 +290,15 @@
         ///	<summary>
         ///		Defines a annotation area.
         ///	</summary>
+ 
+        // If the unit is percentage, convert them here
+        if (note.unit == 'percentage') {
+            note.top *= image.height();
+            note.height *= image.height();
+            note.left *= image.width();
+            note.width *= image.width();
+        }
+
         this.image = image;
 
         this.note = note;
