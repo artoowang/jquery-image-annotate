@@ -21,8 +21,15 @@
     background-position: left top;
     background-repeat: no-repeat;
     display: block;
-    margin: 0;
     position: relative;
+}
+.image-annotate-canvas.blogger {
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
+    cursor: zoom-in;
+    /* This is to match Blogger's image padding when image alignment is "left" */
+    margin: 0 1em 1em 0;
+    border: 2px solid transparent;
 }
 .image-annotate-view {
     display: none;
@@ -31,6 +38,7 @@
 .image-annotate-area {
     border: 1px solid #000000;
     position: absolute;
+    cursor: pointer;
 }
 .image-annotate-area div {
     border: 1px solid #FFFFFF;

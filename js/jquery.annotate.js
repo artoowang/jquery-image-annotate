@@ -21,7 +21,7 @@
         this.notes = opts.notes;
 
         // Add the canvas
-        this.canvas = $('<div class="image-annotate-canvas"><div class="image-annotate-view"></div><div class="image-annotate-edit"><div class="image-annotate-edit-area"></div></div></div>');
+        this.canvas = $('<div class="image-annotate-canvas '+opts.canvasClass+'"><div class="image-annotate-view"></div><div class="image-annotate-edit"><div class="image-annotate-edit-area"></div></div></div>');
         this.canvas.children('.image-annotate-edit').hide();
         this.canvas.children('.image-annotate-view').hide();
         this.image.after(this.canvas);
@@ -80,7 +80,8 @@
         deleteUrl: 'your-delete.rails',
         editable: true,
         useAjax: true,
-        notes: new Array()
+        notes: new Array(),
+        canvasClass: '',
     };
 
     $.fn.annotateImage.clear = function(image) {
@@ -297,6 +298,7 @@
             note.height *= image.height();
             note.left *= image.width();
             note.width *= image.width();
+            note.unit = 'pixel';
         }
 
         this.image = image;
@@ -405,6 +407,15 @@
                 }
 
                 annotation.image.mode = 'view';
+
+                // Remove the note object from the image.notes array
+                var noteIndex = $.inArray(editable.note, annotation.image.notes);
+                if (noteIndex > -1) {
+                    annotation.image.notes.splice(noteIndex, 1);
+                } else {
+                    console.error('Cannot find the removed note in image.notes');
+                }
+
                 editable.destroy();
                 annotation.destroy();
             });
