@@ -20,6 +20,11 @@
         this.useAjax = opts.useAjax;
         this.notes = opts.notes;
 
+        // Save the image size (at the time annotations are created)
+        // This is the image size used to compute percentages
+        this.imageWidth = this.width();
+        this.imageHeight = this.height();
+
         // Add the canvas
         this.canvas = $('<div class="image-annotate-canvas '+opts.canvasClass+'"><div class="image-annotate-view"></div><div class="image-annotate-edit"><div class="image-annotate-edit-area"></div></div></div>');
         this.canvas.children('.image-annotate-edit').hide();
@@ -226,6 +231,7 @@
             newNote.width = 30;
             newNote.height = 30;
             newNote.text = "";
+            newNote.unit = "pixel";
             this.note = newNote;
         }
 
@@ -294,10 +300,10 @@
  
         // If the unit is percentage, convert them here
         if (note.unit == 'percentage') {
-            note.top *= image.height();
-            note.height *= image.height();
-            note.left *= image.width();
-            note.width *= image.width();
+            note.top *= image.imageHeight;
+            note.height *= image.imageHeight;
+            note.left *= image.imageWidth;
+            note.width *= image.imageWidth;
             note.unit = 'pixel';
         }
 
