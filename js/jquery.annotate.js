@@ -19,6 +19,7 @@
         this.editable = opts.editable;
         this.useAjax = opts.useAjax;
         this.notes = opts.notes;
+        this.onSave = opts.onSave;
 
         // Save the image size (at the time annotations are created)
         // This is the image size used to compute percentages
@@ -87,6 +88,7 @@
         useAjax: true,
         notes: new Array(),
         canvasClass: '',
+        onSave: null,
     };
 
     $.fn.annotateImage.clear = function(image) {
@@ -179,6 +181,11 @@
                 note = new $.fn.annotateView(image, editable.note)
                 note.resetPosition(editable, text);
                 image.notes.push(editable.note);
+            }
+
+            // Call onSave if exists
+            if (image.onSave != null) {
+                image.onSave();
             }
 
             editable.destroy();
@@ -420,6 +427,11 @@
                     annotation.image.notes.splice(noteIndex, 1);
                 } else {
                     console.error('Cannot find the removed note in image.notes');
+                }
+
+                // Call onSave if exists
+                if (annotation.image.onSave != null) {
+                    annotation.image.onSave();
                 }
 
                 editable.destroy();
