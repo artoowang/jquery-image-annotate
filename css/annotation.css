@@ -27,8 +27,12 @@
     cursor: -webkit-zoom-in;
     cursor: -moz-zoom-in;
     cursor: zoom-in;
-    /* This is to match Blogger's image padding when image alignment is "left" */
-    margin: 0 1em 1em 0;
+    /* This is to match Blogger's image with "annotatable" class */
+    margin: 0 0 1em 0;
+    /* Blogger's image has 1px transparent border and 1px padding.
+       Note using border to match instead of using margin will make the popup
+       animation slightly misaligned; however, I want to keep the ability to 
+       customize the image alignment (as I did above) */
     border: 2px solid transparent;
 }
 .image-annotate-view {
